@@ -136,6 +136,37 @@ function addEmployee() {
     });
 }
 // Function to update an employee's role
+function updateEmployeeRole() {
+  inquirer
+    .prompt([
+      {
+        type: "number",
+        name: "employeeId",
+        message: "Enter the ID of the employee you would like to update:",
+      },
+      {
+        type: "number",
+        name: "roleId",
+        message: "Enter the ID of the new role for the employee:",
+      },
+    ])
+    .then((answers) => {
+      const { employeeId, roleId } = answers;
+
+      db.query(
+        "UPDATE employee SET role_id = ? WHERE id = ?",
+        [roleId, employeeId],
+        function (err, results) {
+          if (err) {
+            console.error("Error updating employee:", err);
+          } else {
+            console.table(results);
+          }
+          mainMenu();
+        }
+      );
+    });
+}
 
 // Main menu function
 function mainMenu() {
@@ -180,7 +211,7 @@ function mainMenu() {
           addEmployee();
           break;
         case "Update an employee role":
-          // Call the function to update an employee's role
+          updateEmployeeRole();
           break;
         case "Exit":
           console.log("Have a great day!");
