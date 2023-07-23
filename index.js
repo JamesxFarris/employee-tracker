@@ -1,7 +1,6 @@
 // Import Dependencies
 import inquirer from "inquirer";
 import mysql from "mysql2";
-import consoleTable from "console.table";
 
 // Connect to database
 const db = mysql.createConnection(
@@ -36,9 +35,106 @@ function viewEmployees() {
   });
 }
 // Function to add department
-
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "departmentName",
+        message: "What would you like to name the new department?",
+      },
+    ])
+    .then((answers) => {
+      const departmentName = answers.departmentName;
+      db.query(
+        "INSERT INTO department (name) VALUES (?)",
+        [departmentName],
+        function (err, results) {
+          console.table(results);
+          mainMenu();
+        }
+      );
+    });
+}
 // Function to add a role
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "What would you like to name the new role?",
+      },
+      {
+        type: "number",
+        name: "salary",
+        message: "What is the salary of the new role?",
+      },
+      {
+        type: "number",
+        name: "departmentId",
+        message: "Enter the department ID for the new role:",
+      },
+    ])
+    .then((answers) => {
+      const { title, salary, departmentId } = answers;
+
+      db.query(
+        "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
+        [title, salary, departmentId],
+        function (err, results) {
+          if (err) {
+            console.error("Error adding role:", err);
+          } else {
+            console.table(results);
+          }
+          mainMenu();
+        }
+      );
+    });
+}
 // Function to add an employee
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "What is the employee's first name?",
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "What is the employee's last name?",
+      },
+      {
+        type: "number",
+        name: "roleId",
+        message: "Enter the role ID for the new employee:",
+      },
+      {
+        type: "number",
+        name: "managerId",
+        message: "Enter the manager ID for the new employee:",
+      },
+    ])
+    .then((answers) => {
+      const { firstName, lastName, roleId, managerId } = answers;
+
+      db.query(
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+        [firstName, lastName, roleId, managerId],
+        function (err, results) {
+          if (err) {
+            console.error("Error adding employee:", err);
+          } else {
+            console.table(results);
+          }
+          mainMenu();
+        }
+      );
+    });
+}
 // Function to update an employee's role
 
 // Main menu function
@@ -72,16 +168,16 @@ function mainMenu() {
           viewRoles();
           break;
         case "View all employees":
-          // Call the function to view all employees
+          viewEmployees();
           break;
         case "Add a department":
-          // Call the function to add a department
+          addDepartment();
           break;
         case "Add a role":
-          // Call the function to add a role
+          addRole();
           break;
         case "Add an employee":
-          // Call the function to add an employee
+          addEmployee();
           break;
         case "Update an employee role":
           // Call the function to update an employee's role
