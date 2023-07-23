@@ -1,9 +1,10 @@
 // Import Dependencies
 import inquirer from "inquirer";
-import { createConnection } from "mysql2";
+import mysql from "mysql2";
+import consoleTable from "console.table";
 
 // Connect to database
-const db = createConnection(
+const db = mysql.createConnection(
   {
     host: "localhost",
     user: "root",
@@ -12,6 +13,33 @@ const db = createConnection(
   },
   console.log("Database connected.")
 );
+
+// Function to view all departments
+function viewDepartments() {
+  db.query("SELECT * FROM department", function (err, results) {
+    console.table(results);
+    mainMenu();
+  });
+}
+// Function to view all roles
+function viewRoles() {
+  db.query("SELECT * FROM role", function (err, results) {
+    console.table(results);
+    mainMenu();
+  });
+}
+// Function to view all employees
+function viewEmployees() {
+  db.query("SELECT * FROM employee", function (err, results) {
+    console.table(results);
+    mainMenu();
+  });
+}
+// Function to add department
+
+// Function to add a role
+// Function to add an employee
+// Function to update an employee's role
 
 // Main menu function
 function mainMenu() {
@@ -38,10 +66,10 @@ function mainMenu() {
     .then((answers) => {
       switch (answers.menuChoice) {
         case "View all departments":
-          // Call the function to view all departments
+          viewDepartments();
           break;
         case "View all roles":
-          // Call the function to view all roles
+          viewRoles();
           break;
         case "View all employees":
           // Call the function to view all employees
