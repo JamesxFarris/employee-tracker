@@ -1,9 +1,9 @@
 // Import Dependencies
-const inquirer = require("inquirer");
-const mysql = require("mysql");
+import inquirer from "inquirer";
+import { createConnection } from "mysql2";
 
 // Connect to database
-const db = mysql.createConnection(
+const db = createConnection(
   {
     host: "localhost",
     user: "root",
@@ -13,48 +13,63 @@ const db = mysql.createConnection(
   console.log("Database connected.")
 );
 
-// Set values for inquirer prompts
-const main = [
-  { name: "View all departments", value: "departments" },
-  { name: "View all roles", value: "roles" },
-  { name: "View all employees", value: "employees" },
-  { name: "Add a department", value: "addDepartment" },
-  { name: "Add a role", value: "role" },
-  { name: "Add an employee", value: "employee" },
-  { name: "Update and employee role", value: "roleUpdate" },
-  { name: "Exit", value: "exit" },
-];
-
-// Switch Case for main menu
-function init() {
-  inquirer.prompt(main).then((answer) => {
-    switch (answer.main) {
-      case "departments":
-        viewDepartments();
-        break;
-      case "roles":
-        viewRoles();
-        break;
-      case "employees":
-        viewEmployees();
-        break;
-      case "addDepartment":
-        addDepartment();
-        break;
-      case "role":
-        addRole();
-        break;
-      case "employee":
-        addEmployee();
-        break;
-      case "roleUpdate":
-        updateRole();
-        break;
-      case "exit":
-        db.end();
-        break;
-    }
-  });
+// Main menu function
+function mainMenu() {
+  inquirer
+    //   Prompt user for action
+    .prompt([
+      {
+        type: "list",
+        name: "menuChoice",
+        message: "Select an option:",
+        choices: [
+          "View all departments",
+          "View all roles",
+          "View all employees",
+          "Add a department",
+          "Add a role",
+          "Add an employee",
+          "Update an employee role",
+          "Exit",
+        ],
+      },
+    ])
+    // Switch to call the function they chose
+    .then((answers) => {
+      switch (answers.menuChoice) {
+        case "View all departments":
+          // Call the function to view all departments
+          break;
+        case "View all roles":
+          // Call the function to view all roles
+          break;
+        case "View all employees":
+          // Call the function to view all employees
+          break;
+        case "Add a department":
+          // Call the function to add a department
+          break;
+        case "Add a role":
+          // Call the function to add a role
+          break;
+        case "Add an employee":
+          // Call the function to add an employee
+          break;
+        case "Update an employee role":
+          // Call the function to update an employee's role
+          break;
+        case "Exit":
+          console.log("Have a great day!");
+          process.exit(0);
+        default:
+          console.log("Invalid choice.");
+          mainMenu();
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
-init();
+// Calls the main menu
+mainMenu();
