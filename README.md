@@ -9,7 +9,7 @@
 
 https://github.com/JamesxFarris/management-system/assets/51385562/753c8694-6508-4c13-a657-185ff8d6508b
 
-[Link to the above video](https://github.com/JamesxFarris/management-system)
+[Link to the above video](https://github.com/JamesxFarris/management-system/issues/1)
 
 </div>
 <hr>
