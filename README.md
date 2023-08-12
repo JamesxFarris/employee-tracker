@@ -6,6 +6,7 @@
 <strong> A database driven management system built to use in a terminal. </strong>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 
 https://github.com/JamesxFarris/management-system/assets/51385562/753c8694-6508-4c13-a657-185ff8d6508b
 
